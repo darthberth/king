@@ -1,0 +1,324 @@
+<!-- ============================================================
+     HOMEPAGE WORDPRESS — ONEPIECEMANIA.it
+     GUTENBERG PURO (solo blocchi core, NESSUN plugin)
+     Sito di news su One Piece (anime, manga, teorie, recensioni)
+
+     COME USARLA:
+     1. Pagine -> Aggiungi nuova (titolo: "Home").
+     2. Menu tre puntini (alto a destra) -> "Editor di codice".
+     3. Incolla TUTTO questo contenuto, poi torna all'editor visuale.
+     4. Impostazioni -> Lettura -> "La tua homepage mostra" ->
+        "Una pagina statica" -> Home.
+
+     CATEGORIE (IMPORTANTE):
+     I blocchi Query Loop filtrano per ID categoria nel campo
+     "taxQuery":{"category":[ID]}. Sostituisci gli ID con quelli reali
+     del tuo sito (Articoli -> Categorie: passa il mouse su una
+     categoria e leggi tag_ID=NN nell'URL).
+     Mappa usata qui (ESEMPIO — da adattare):
+        2 = News / In Evidenza      5 = Recensioni
+        3 = Anime                   6 = Personaggi
+        4 = Manga & Capitoli        7 = Teorie & Spoiler
+        8 = Live Action (Netflix)
+
+     CAROSELLO:
+     Gutenberg core non ha un carosello auto-rotante (serve JS/plugin).
+     Questo e' un carosello a SCORRIMENTO ORIZZONTALE (scroll-snap),
+     100% core. Per attivare lo scorrimento incolla questo CSS in
+     Aspetto -> Personalizza -> CSS aggiuntivo:
+
+       .opm-carousel .wp-block-post-template{
+         display:flex !important; flex-wrap:nowrap; gap:24px;
+         overflow-x:auto; scroll-snap-type:x mandatory;
+         padding-bottom:14px; scrollbar-width:thin;
+       }
+       .opm-carousel .wp-block-post-template > li{
+         flex:0 0 340px; max-width:340px; scroll-snap-align:start;
+       }
+       @media(max-width:600px){
+         .opm-carousel .wp-block-post-template > li{flex-basis:80%;max-width:80%}
+       }
+     ============================================================ -->
+
+
+<!-- ============================================
+     HERO — TITOLO + CAROSELLO NEWS PRINCIPALI
+     ============================================ -->
+<!-- wp:group {"align":"full","className":"opm-hero","style":{"spacing":{"padding":{"top":"48px","bottom":"48px","left":"20px","right":"20px"}},"color":{"gradient":"linear-gradient(160deg,#0b1f3a 0%,#13294b 55%,#7a0f1e 100%)"}},"layout":{"type":"constrained","contentSize":"1240px"}} -->
+<div class="wp-block-group alignfull opm-hero has-background" style="background:linear-gradient(160deg,#0b1f3a 0%,#13294b 55%,#7a0f1e 100%);padding-top:48px;padding-right:20px;padding-bottom:48px;padding-left:20px">
+
+<!-- wp:heading {"textAlign":"center","level":1,"style":{"typography":{"fontSize":"2.6rem","fontWeight":"800","letterSpacing":"1px"},"spacing":{"margin":{"bottom":"4px"}},"color":{"text":"#ffffff"}}} -->
+<h1 class="wp-block-heading has-text-align-center has-text-color" style="color:#ffffff;margin-bottom:4px;font-size:2.6rem;font-weight:800;letter-spacing:1px">ONE PIECE MANIA</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"1rem","letterSpacing":"3px","textTransform":"uppercase"},"color":{"text":"#ffd34d"},"spacing":{"margin":{"bottom":"30px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#ffd34d;margin-bottom:30px;font-size:1rem;letter-spacing:3px;text-transform:uppercase">News • Anime • Manga • Teorie • Recensioni</p>
+<!-- /wp:paragraph -->
+
+<!-- CAROSELLO a scorrimento orizzontale: categoria "News / In Evidenza" (ID 2) -->
+<!-- wp:query {"queryId":10,"query":{"perPage":8,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":false,"taxQuery":{"category":[2]}},"className":"opm-carousel"} -->
+<div class="wp-block-query opm-carousel"><!-- wp:post-template -->
+<!-- wp:group {"style":{"spacing":{"blockGap":"0"},"color":{"background":"#13294b"},"border":{"radius":"12px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:12px;background-color:#13294b">
+<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9","style":{"border":{"radius":"12px"}}} /-->
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"16px","right":"18px","bottom":"18px","left":"18px"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group" style="padding-top:16px;padding-right:18px;padding-bottom:18px;padding-left:18px">
+<!-- wp:post-terms {"term":"category","style":{"typography":{"fontSize":"0.75rem","textTransform":"uppercase","letterSpacing":"1px","fontWeight":"700"},"color":{"text":"#ffd34d"}}} /-->
+<!-- wp:post-title {"isLink":true,"level":3,"style":{"typography":{"fontSize":"1.15rem","fontWeight":"700","lineHeight":"1.3"},"spacing":{"margin":{"top":"8px","bottom":"8px"}},"color":{"text":"#ffffff"},"elements":{"link":{"color":{"text":"#ffffff"}}}}} /-->
+<!-- wp:post-date {"style":{"typography":{"fontSize":"0.8rem"},"color":{"text":"#aebcd1"}}} /-->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+<!-- /wp:post-template --></div>
+<!-- /wp:query -->
+
+</div>
+<!-- /wp:group -->
+
+
+<!-- ============================================
+     STRISCIA "ULTIM'ORA"
+     ============================================ -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"14px","bottom":"14px","left":"20px","right":"20px"}},"color":{"background":"#7a0f1e"}},"layout":{"type":"constrained","contentSize":"1240px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#7a0f1e;padding-top:14px;padding-right:20px;padding-bottom:14px;padding-left:20px">
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"0.95rem","fontWeight":"600","letterSpacing":"0.5px"},"color":{"text":"#ffffff"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#ffffff;margin-top:0;margin-bottom:0;font-size:0.95rem;font-weight:600;letter-spacing:0.5px">⚡ ULTIM'ORA — Tutte le novita su capitoli, episodi e annunci ufficiali dal mondo di One Piece</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+
+<!-- ============================================
+     AREA TEMATICA — ANIME
+     ============================================ -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"60px","bottom":"60px","left":"20px","right":"20px"}},"color":{"background":"#ffffff"}},"layout":{"type":"constrained","contentSize":"1240px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#ffffff;padding-top:60px;padding-right:20px;padding-bottom:60px;padding-left:20px">
+
+<!-- wp:group {"style":{"spacing":{"blockGap":"0","margin":{"bottom":"28px"}}},"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap","verticalAlignment":"center"}} -->
+<div class="wp-block-group">
+<!-- wp:heading {"level":2,"style":{"typography":{"fontSize":"1.9rem","fontWeight":"800"},"color":{"text":"#0b1f3a"},"border":{"left":{"color":"#7a0f1e","width":"6px"}},"spacing":{"padding":{"left":"16px"}}}} -->
+<h2 class="wp-block-heading has-text-color has-border-color" style="border-left-color:#7a0f1e;border-left-width:6px;padding-left:16px;color:#0b1f3a;font-size:1.9rem;font-weight:800">🎬 Anime</h2>
+<!-- /wp:heading -->
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"0.95rem","fontWeight":"600"},"color":{"text":"#7a0f1e"}}} -->
+<p class="has-text-color" style="color:#7a0f1e;font-size:0.95rem;font-weight:600"><a href="/categoria/anime/" style="color:#7a0f1e;text-decoration:none">Vedi tutti gli episodi →</a></p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:query {"queryId":11,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":false,"taxQuery":{"category":[3]}}} -->
+<div class="wp-block-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
+<!-- wp:group {"style":{"spacing":{"blockGap":"10px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group">
+<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9","style":{"border":{"radius":"10px"}}} /-->
+<!-- wp:post-terms {"term":"category","style":{"typography":{"fontSize":"0.75rem","textTransform":"uppercase","letterSpacing":"1px","fontWeight":"700"},"color":{"text":"#7a0f1e"},"spacing":{"margin":{"top":"10px"}}}} /-->
+<!-- wp:post-title {"isLink":true,"level":3,"style":{"typography":{"fontSize":"1.2rem","fontWeight":"700","lineHeight":"1.3"},"spacing":{"margin":{"top":"6px","bottom":"6px"}},"color":{"text":"#0b1f3a"},"elements":{"link":{"color":{"text":"#0b1f3a"}}}}} /-->
+<!-- wp:post-excerpt {"excerptLength":20,"style":{"typography":{"fontSize":"0.95rem","lineHeight":"1.6"},"color":{"text":"#555555"}}} /-->
+<!-- wp:post-date {"style":{"typography":{"fontSize":"0.8rem"},"color":{"text":"#999999"}}} /-->
+</div>
+<!-- /wp:group -->
+<!-- /wp:post-template --></div>
+<!-- /wp:query -->
+
+</div>
+<!-- /wp:group -->
+
+
+<!-- ============================================
+     AREA TEMATICA — MANGA & CAPITOLI (sfondo chiaro)
+     ============================================ -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"60px","bottom":"60px","left":"20px","right":"20px"}},"color":{"background":"#f4f6fa"}},"layout":{"type":"constrained","contentSize":"1240px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#f4f6fa;padding-top:60px;padding-right:20px;padding-bottom:60px;padding-left:20px">
+
+<!-- wp:group {"style":{"spacing":{"blockGap":"0","margin":{"bottom":"28px"}}},"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap","verticalAlignment":"center"}} -->
+<div class="wp-block-group">
+<!-- wp:heading {"level":2,"style":{"typography":{"fontSize":"1.9rem","fontWeight":"800"},"color":{"text":"#0b1f3a"},"border":{"left":{"color":"#7a0f1e","width":"6px"}},"spacing":{"padding":{"left":"16px"}}}} -->
+<h2 class="wp-block-heading has-text-color has-border-color" style="border-left-color:#7a0f1e;border-left-width:6px;padding-left:16px;color:#0b1f3a;font-size:1.9rem;font-weight:800">📖 Manga &amp; Capitoli</h2>
+<!-- /wp:heading -->
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"0.95rem","fontWeight":"600"},"color":{"text":"#7a0f1e"}}} -->
+<p class="has-text-color" style="color:#7a0f1e;font-size:0.95rem;font-weight:600"><a href="/categoria/manga/" style="color:#7a0f1e;text-decoration:none">Tutti i capitoli →</a></p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:query {"queryId":12,"query":{"perPage":4,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":false,"taxQuery":{"category":[4]}}} -->
+<div class="wp-block-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":4}} -->
+<!-- wp:group {"style":{"spacing":{"blockGap":"8px","padding":{"bottom":"6px"}},"color":{"background":"#ffffff"},"border":{"radius":"10px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:10px;background-color:#ffffff;padding-bottom:6px">
+<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3","style":{"border":{"radius":"10px"}}} /-->
+<!-- wp:group {"style":{"spacing":{"blockGap":"6px","padding":{"left":"14px","right":"14px"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group" style="padding-right:14px;padding-left:14px">
+<!-- wp:post-title {"isLink":true,"level":3,"style":{"typography":{"fontSize":"1rem","fontWeight":"700","lineHeight":"1.3"},"spacing":{"margin":{"top":"8px","bottom":"4px"}},"color":{"text":"#0b1f3a"},"elements":{"link":{"color":{"text":"#0b1f3a"}}}}} /-->
+<!-- wp:post-date {"style":{"typography":{"fontSize":"0.78rem"},"color":{"text":"#999999"}}} /-->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+<!-- /wp:post-template --></div>
+<!-- /wp:query -->
+
+</div>
+<!-- /wp:group -->
+
+
+<!-- ============================================
+     DOPPIA COLONNA — TEORIE & SPOILER + PERSONAGGI
+     ============================================ -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"60px","bottom":"60px","left":"20px","right":"20px"}},"color":{"background":"#ffffff"}},"layout":{"type":"constrained","contentSize":"1240px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#ffffff;padding-top:60px;padding-right:20px;padding-bottom:60px;padding-left:20px">
+
+<!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"50px"}}}} -->
+<div class="wp-block-columns">
+
+<!-- COLONNA — TEORIE & SPOILER -->
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:heading {"level":2,"style":{"typography":{"fontSize":"1.6rem","fontWeight":"800"},"color":{"text":"#0b1f3a"},"border":{"left":{"color":"#7a0f1e","width":"6px"}},"spacing":{"padding":{"left":"14px"},"margin":{"bottom":"22px"}}}} -->
+<h2 class="wp-block-heading has-text-color has-border-color" style="border-left-color:#7a0f1e;border-left-width:6px;padding-left:14px;margin-bottom:22px;color:#0b1f3a;font-size:1.6rem;font-weight:800">🔮 Teorie &amp; Spoiler</h2>
+<!-- /wp:heading -->
+
+<!-- wp:query {"queryId":13,"query":{"perPage":4,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":false,"taxQuery":{"category":[7]}}} -->
+<div class="wp-block-query"><!-- wp:post-template -->
+<!-- wp:group {"style":{"spacing":{"blockGap":"14px","padding":{"top":"10px","bottom":"10px"}},"border":{"bottom":{"color":"#eaeef4","width":"1px"}}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+<div class="wp-block-group has-border-color" style="border-bottom-color:#eaeef4;border-bottom-width:1px;padding-top:10px;padding-bottom:10px">
+<!-- wp:post-featured-image {"isLink":true,"width":"92px","height":"68px","style":{"border":{"radius":"8px"}}} /-->
+<!-- wp:post-title {"isLink":true,"level":3,"style":{"typography":{"fontSize":"1rem","fontWeight":"600","lineHeight":"1.35"},"spacing":{"margin":{"top":"0","bottom":"0"}},"color":{"text":"#0b1f3a"},"elements":{"link":{"color":{"text":"#0b1f3a"}}}}} /-->
+</div>
+<!-- /wp:group -->
+<!-- /wp:post-template --></div>
+<!-- /wp:query -->
+</div>
+<!-- /wp:column -->
+
+<!-- COLONNA — PERSONAGGI -->
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:heading {"level":2,"style":{"typography":{"fontSize":"1.6rem","fontWeight":"800"},"color":{"text":"#0b1f3a"},"border":{"left":{"color":"#7a0f1e","width":"6px"}},"spacing":{"padding":{"left":"14px"},"margin":{"bottom":"22px"}}}} -->
+<h2 class="wp-block-heading has-text-color has-border-color" style="border-left-color:#7a0f1e;border-left-width:6px;padding-left:14px;margin-bottom:22px;color:#0b1f3a;font-size:1.6rem;font-weight:800">👤 Personaggi</h2>
+<!-- /wp:heading -->
+
+<!-- wp:query {"queryId":14,"query":{"perPage":4,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":false,"taxQuery":{"category":[6]}}} -->
+<div class="wp-block-query"><!-- wp:post-template -->
+<!-- wp:group {"style":{"spacing":{"blockGap":"14px","padding":{"top":"10px","bottom":"10px"}},"border":{"bottom":{"color":"#eaeef4","width":"1px"}}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+<div class="wp-block-group has-border-color" style="border-bottom-color:#eaeef4;border-bottom-width:1px;padding-top:10px;padding-bottom:10px">
+<!-- wp:post-featured-image {"isLink":true,"width":"92px","height":"68px","style":{"border":{"radius":"8px"}}} /-->
+<!-- wp:post-title {"isLink":true,"level":3,"style":{"typography":{"fontSize":"1rem","fontWeight":"600","lineHeight":"1.35"},"spacing":{"margin":{"top":"0","bottom":"0"}},"color":{"text":"#0b1f3a"},"elements":{"link":{"color":{"text":"#0b1f3a"}}}}} /-->
+</div>
+<!-- /wp:group -->
+<!-- /wp:post-template --></div>
+<!-- /wp:query -->
+</div>
+<!-- /wp:column -->
+
+</div>
+<!-- /wp:columns -->
+
+</div>
+<!-- /wp:group -->
+
+
+<!-- ============================================
+     AREA TEMATICA — RECENSIONI
+     ============================================ -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"60px","bottom":"60px","left":"20px","right":"20px"}},"color":{"background":"#f4f6fa"}},"layout":{"type":"constrained","contentSize":"1240px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#f4f6fa;padding-top:60px;padding-right:20px;padding-bottom:60px;padding-left:20px">
+
+<!-- wp:group {"style":{"spacing":{"blockGap":"0","margin":{"bottom":"28px"}}},"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap","verticalAlignment":"center"}} -->
+<div class="wp-block-group">
+<!-- wp:heading {"level":2,"style":{"typography":{"fontSize":"1.9rem","fontWeight":"800"},"color":{"text":"#0b1f3a"},"border":{"left":{"color":"#7a0f1e","width":"6px"}},"spacing":{"padding":{"left":"16px"}}}} -->
+<h2 class="wp-block-heading has-text-color has-border-color" style="border-left-color:#7a0f1e;border-left-width:6px;padding-left:16px;color:#0b1f3a;font-size:1.9rem;font-weight:800">⭐ Recensioni</h2>
+<!-- /wp:heading -->
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"0.95rem","fontWeight":"600"},"color":{"text":"#7a0f1e"}}} -->
+<p class="has-text-color" style="color:#7a0f1e;font-size:0.95rem;font-weight:600"><a href="/categoria/recensioni/" style="color:#7a0f1e;text-decoration:none">Tutte le recensioni →</a></p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:query {"queryId":15,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":false,"taxQuery":{"category":[5]}}} -->
+<div class="wp-block-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
+<!-- wp:group {"style":{"spacing":{"blockGap":"8px","padding":{"bottom":"16px"}},"color":{"background":"#ffffff"},"border":{"radius":"10px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:10px;background-color:#ffffff;padding-bottom:16px">
+<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9","style":{"border":{"radius":"10px"}}} /-->
+<!-- wp:group {"style":{"spacing":{"blockGap":"8px","padding":{"left":"18px","right":"18px"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group" style="padding-right:18px;padding-left:18px">
+<!-- wp:post-title {"isLink":true,"level":3,"style":{"typography":{"fontSize":"1.2rem","fontWeight":"700","lineHeight":"1.3"},"spacing":{"margin":{"top":"12px","bottom":"6px"}},"color":{"text":"#0b1f3a"},"elements":{"link":{"color":{"text":"#0b1f3a"}}}}} /-->
+<!-- wp:post-excerpt {"excerptLength":22,"style":{"typography":{"fontSize":"0.95rem","lineHeight":"1.6"},"color":{"text":"#555555"}}} /-->
+<!-- wp:group {"style":{"spacing":{"blockGap":"10px"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+<div class="wp-block-group">
+<!-- wp:post-author-name {"isLink":false,"style":{"typography":{"fontSize":"0.8rem","fontWeight":"600"},"color":{"text":"#7a0f1e"}}} /-->
+<!-- wp:post-date {"style":{"typography":{"fontSize":"0.8rem"},"color":{"text":"#999999"}}} /-->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+<!-- /wp:post-template --></div>
+<!-- /wp:query -->
+
+</div>
+<!-- /wp:group -->
+
+
+<!-- ============================================
+     AREA TEMATICA — LIVE ACTION (Netflix), sfondo scuro
+     ============================================ -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"60px","bottom":"60px","left":"20px","right":"20px"}},"color":{"background":"#0b1f3a"}},"layout":{"type":"constrained","contentSize":"1240px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#0b1f3a;padding-top:60px;padding-right:20px;padding-bottom:60px;padding-left:20px">
+
+<!-- wp:group {"style":{"spacing":{"blockGap":"0","margin":{"bottom":"28px"}}},"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap","verticalAlignment":"center"}} -->
+<div class="wp-block-group">
+<!-- wp:heading {"level":2,"style":{"typography":{"fontSize":"1.9rem","fontWeight":"800"},"color":{"text":"#ffffff"},"border":{"left":{"color":"#ffd34d","width":"6px"}},"spacing":{"padding":{"left":"16px"}}}} -->
+<h2 class="wp-block-heading has-text-color has-border-color" style="border-left-color:#ffd34d;border-left-width:6px;padding-left:16px;color:#ffffff;font-size:1.9rem;font-weight:800">🎥 Live Action — Netflix</h2>
+<!-- /wp:heading -->
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"0.95rem","fontWeight":"600"},"color":{"text":"#ffd34d"}}} -->
+<p class="has-text-color" style="color:#ffd34d;font-size:0.95rem;font-weight:600"><a href="/categoria/live-action/" style="color:#ffd34d;text-decoration:none">Tutte le news →</a></p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:query {"queryId":16,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":false,"taxQuery":{"category":[8]}}} -->
+<div class="wp-block-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
+<!-- wp:group {"style":{"spacing":{"blockGap":"8px","padding":{"bottom":"16px"}},"color":{"background":"#13294b"},"border":{"radius":"10px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:10px;background-color:#13294b;padding-bottom:16px">
+<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9","style":{"border":{"radius":"10px"}}} /-->
+<!-- wp:group {"style":{"spacing":{"blockGap":"8px","padding":{"left":"18px","right":"18px"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group" style="padding-right:18px;padding-left:18px">
+<!-- wp:post-title {"isLink":true,"level":3,"style":{"typography":{"fontSize":"1.2rem","fontWeight":"700","lineHeight":"1.3"},"spacing":{"margin":{"top":"12px","bottom":"6px"}},"color":{"text":"#ffffff"},"elements":{"link":{"color":{"text":"#ffffff"}}}}} /-->
+<!-- wp:post-excerpt {"excerptLength":18,"style":{"typography":{"fontSize":"0.92rem","lineHeight":"1.6"},"color":{"text":"#cfd6e2"}}} /-->
+<!-- wp:post-date {"style":{"typography":{"fontSize":"0.8rem"},"color":{"text":"#aebcd1"}}} /-->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+<!-- /wp:post-template --></div>
+<!-- /wp:query -->
+
+</div>
+<!-- /wp:group -->
+
+
+<!-- ============================================
+     CTA NEWSLETTER
+     ============================================ -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"70px","bottom":"70px","left":"20px","right":"20px"}},"color":{"gradient":"linear-gradient(135deg,#7a0f1e 0%,#0b1f3a 100%)"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
+<div class="wp-block-group alignfull has-background" style="background:linear-gradient(135deg,#7a0f1e 0%,#0b1f3a 100%);padding-top:70px;padding-right:20px;padding-bottom:70px;padding-left:20px">
+<!-- wp:heading {"textAlign":"center","level":2,"style":{"typography":{"fontSize":"2rem","fontWeight":"800"},"color":{"text":"#ffffff"},"spacing":{"margin":{"bottom":"12px"}}}} -->
+<h2 class="wp-block-heading has-text-align-center has-text-color" style="color:#ffffff;margin-bottom:12px;font-size:2rem;font-weight:800">Unisciti alla Ciurma! 🏴‍☠️</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"1.1rem","lineHeight":"1.7"},"color":{"text":"#ffe9b0"},"spacing":{"margin":{"bottom":"28px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#ffe9b0;margin-bottom:28px;font-size:1.1rem;line-height:1.7">Iscriviti alla newsletter e ricevi in anteprima capitoli, episodi, teorie e tutte le novita dal mondo di One Piece.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons"><!-- wp:button {"style":{"border":{"radius":"6px"},"typography":{"fontWeight":"700"},"color":{"text":"#0b1f3a","background":"#ffd34d"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="/newsletter/" style="border-radius:6px;color:#0b1f3a;background-color:#ffd34d;font-weight:700">Iscriviti Gratis</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-outline","style":{"border":{"radius":"6px","width":"2px","color":"#ffffff"},"typography":{"fontWeight":"700"},"color":{"text":"#ffffff"}}} -->
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link has-text-color has-border-color wp-element-button" href="/chi-siamo/" style="border-color:#ffffff;border-width:2px;border-radius:6px;color:#ffffff;font-weight:700">Scopri OnePieceMania</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+</div>
+<!-- /wp:group -->
