@@ -21,23 +21,16 @@
         4 = Manga & Capitoli        7 = Teorie & Spoiler
         8 = Live Action (Netflix)
 
-     CAROSELLO:
-     Gutenberg core non ha un carosello auto-rotante (serve JS/plugin).
-     Questo e' un carosello a SCORRIMENTO ORIZZONTALE (scroll-snap),
-     100% core. Per attivare lo scorrimento incolla questo CSS in
-     Aspetto -> Personalizza -> CSS aggiuntivo:
-
-       .opm-carousel .wp-block-post-template{
-         display:flex !important; flex-wrap:nowrap; gap:24px;
-         overflow-x:auto; scroll-snap-type:x mandatory;
-         padding-bottom:14px; scrollbar-width:thin;
-       }
-       .opm-carousel .wp-block-post-template > li{
-         flex:0 0 340px; max-width:340px; scroll-snap-align:start;
-       }
-       @media(max-width:600px){
-         .opm-carousel .wp-block-post-template > li{flex-basis:80%;max-width:80%}
-       }
+     CAROSELLO AUTO-ROTANTE:
+     Gutenberg core non ha un blocco carosello: l'auto-rotazione e'
+     gestita da un piccolo CSS+JS gia' incluso in un blocco "HTML
+     personalizzato" (wp:html) dentro la sezione hero. Non servono
+     plugin ne' CSS aggiuntivo: e' tutto self-contained.
+     Funzioni: scorrimento automatico, frecce avanti/indietro, pausa
+     al passaggio del mouse, swipe su mobile, loop infinito.
+     NB: il blocco HTML personalizzato richiede un utente con permessi
+     da Amministratore (capacita' unfiltered_html) per salvare lo
+     <script>. Su WordPress.com servono piani Business/Commerce.
      ============================================================ -->
 
 
@@ -55,9 +48,13 @@
 <p class="has-text-align-center has-text-color" style="color:#ffd34d;margin-bottom:30px;font-size:1rem;letter-spacing:3px;text-transform:uppercase">News • Anime • Manga • Teorie • Recensioni</p>
 <!-- /wp:paragraph -->
 
-<!-- CAROSELLO a scorrimento orizzontale: categoria "News / In Evidenza" (ID 2) -->
-<!-- wp:query {"queryId":10,"query":{"perPage":8,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":false,"taxQuery":{"category":[2]}},"className":"opm-carousel"} -->
-<div class="wp-block-query opm-carousel"><!-- wp:post-template -->
+<!-- CAROSELLO AUTO-ROTANTE: categoria "News / In Evidenza" (ID 2).
+     La classe "opm-carousel" e' agganciata dal CSS+JS nel blocco HTML
+     personalizzato subito dopo. La classe "opm-track" e' sul wrapper. -->
+<!-- wp:group {"className":"opm-carousel","style":{"spacing":{"blockGap":"0"}},"layout":{"type":"constrained","contentSize":"1240px"}} -->
+<div class="wp-block-group opm-carousel">
+<!-- wp:query {"queryId":10,"query":{"perPage":8,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":false,"taxQuery":{"category":[2]}}} -->
+<div class="wp-block-query"><!-- wp:post-template -->
 <!-- wp:group {"style":{"spacing":{"blockGap":"0"},"color":{"background":"#13294b"},"border":{"radius":"12px"}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group has-background" style="border-radius:12px;background-color:#13294b">
 <!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9","style":{"border":{"radius":"12px"}}} /-->
@@ -72,6 +69,64 @@
 <!-- /wp:group -->
 <!-- /wp:post-template --></div>
 <!-- /wp:query -->
+</div>
+<!-- /wp:group -->
+
+<!-- CSS + JS del carosello auto-rotante (self-contained, nessun plugin) -->
+<!-- wp:html -->
+<style>
+.opm-carousel{position:relative}
+.opm-carousel .wp-block-post-template{
+  display:flex !important;flex-wrap:nowrap;gap:24px;margin:0;padding:4px 2px 16px;
+  list-style:none;overflow-x:auto;scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.opm-carousel .wp-block-post-template::-webkit-scrollbar{display:none}
+.opm-carousel .wp-block-post-template>li{
+  flex:0 0 340px;max-width:340px;scroll-snap-align:start;
+}
+@media(max-width:600px){
+  .opm-carousel .wp-block-post-template>li{flex:0 0 82%;max-width:82%}
+}
+.opm-nav{
+  position:absolute;top:38%;transform:translateY(-50%);z-index:5;
+  width:46px;height:46px;border:none;border-radius:50%;cursor:pointer;
+  background:#ffd34d;color:#0b1f3a;font-size:22px;font-weight:700;line-height:1;
+  box-shadow:0 4px 14px rgba(0,0,0,.35);transition:background .2s,transform .2s;
+  display:flex;align-items:center;justify-content:center;
+}
+.opm-nav:hover{background:#7a0f1e;color:#fff;transform:translateY(-50%) scale(1.08)}
+.opm-nav.prev{left:-6px}
+.opm-nav.next{right:-6px}
+@media(max-width:600px){.opm-nav{width:38px;height:38px;font-size:18px}}
+</style>
+<script>
+(function(){
+  function init(c){
+    if(c.dataset.opmReady) return; c.dataset.opmReady='1';
+    var track=c.querySelector('.wp-block-post-template');
+    if(!track) return;
+    function step(){var f=track.querySelector('li');return f?f.getBoundingClientRect().width+24:360;}
+    function atEnd(){return track.scrollLeft+track.clientWidth>=track.scrollWidth-5;}
+    function next(){ if(atEnd()){track.scrollTo({left:0,behavior:'smooth'});} else {track.scrollBy({left:step(),behavior:'smooth'});} }
+    function prev(){ if(track.scrollLeft<=5){track.scrollTo({left:track.scrollWidth,behavior:'smooth'});} else {track.scrollBy({left:-step(),behavior:'smooth'});} }
+    var b1=document.createElement('button');b1.className='opm-nav prev';b1.setAttribute('aria-label','Precedente');b1.innerHTML='&#10094;';
+    var b2=document.createElement('button');b2.className='opm-nav next';b2.setAttribute('aria-label','Successivo');b2.innerHTML='&#10095;';
+    b1.addEventListener('click',prev);b2.addEventListener('click',next);
+    c.appendChild(b1);c.appendChild(b2);
+    var timer=setInterval(next,4000);
+    function pause(){clearInterval(timer);}
+    function play(){clearInterval(timer);timer=setInterval(next,4000);}
+    c.addEventListener('mouseenter',pause);
+    c.addEventListener('mouseleave',play);
+    track.addEventListener('touchstart',pause,{passive:true});
+    track.addEventListener('touchend',play,{passive:true});
+  }
+  function boot(){document.querySelectorAll('.opm-carousel').forEach(init);}
+  if(document.readyState!=='loading'){boot();}else{document.addEventListener('DOMContentLoaded',boot);}
+})();
+</script>
+<!-- /wp:html -->
 
 </div>
 <!-- /wp:group -->
